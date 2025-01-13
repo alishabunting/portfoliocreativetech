@@ -535,4 +535,46 @@ export const CarouselWrapper = styled.div`
       object-fit: contain;
     }
   }
+`;
+
+export const CarouselNavigation = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.1);
+`;
+
+export const CarouselDots = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+`;
+
+export const CarouselDot = styled.button<{ active: boolean }>`
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: ${props => props.active ? 'var(--color-primary)' : 'var(--color-border)'};
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.3s ease;
+
+  &:hover {
+    background: var(--color-primary);
+    opacity: 0.8;
+  }
+`;
+
+export const MediaCaption = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  text-align: center;
+  font-size: 0.9rem;
 `; 

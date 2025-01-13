@@ -4,6 +4,7 @@ import { Project } from './types';
 import ProjectCard from './ProjectCard';
 import Carousel from './Carousel';
 import WebGrid from './WebGrid';
+import YouTubeEmbed from './YouTubeEmbed';
 import {
   Section,
   ProjectBanner,
@@ -144,9 +145,9 @@ const ProjectSection: React.FC = () => {
       description: "A curated collection of photographic works showcasing visual storytelling through the lens, featuring a diverse range of styles from infrared to lifestyle photography.",
       tags: ["Photography", "Visual Arts", "Digital Media"],
       gallery: [
-        { type: 'video', url: getCompressedVideo('/projects/photography/alisha_reel_2160p.mp4'), caption: 'Alisha Tené Bunting Reel' },
-        { type: 'video', url: getCompressedVideo('/projects/photography/Charlie\'s Story Teaser Our Stories_ In Vivid Color.mp4'), caption: 'Charlie\'s Story Teaser' },
-        { type: 'video', url: getCompressedVideo('/projects/photography/Our Stories_ In Vivid Color Official Teaser OurStoriesInVividColor.mp4'), caption: 'Our Stories In Vivid Color Teaser' },
+        { type: 'youtube' as const, url: getCompressedVideo('/projects/photography/alisha_reel_2160p.mp4'), caption: 'Alisha Tené Bunting Reel' },
+        { type: 'video' as const, url: getCompressedVideo('/projects/photography/Charlie\'s Story Teaser Our Stories_ In Vivid Color.mp4'), caption: 'Charlie\'s Story Teaser' },
+        { type: 'video' as const, url: getCompressedVideo('/projects/photography/Our Stories_ In Vivid Color Official Teaser OurStoriesInVividColor.mp4'), caption: 'Our Stories In Vivid Color Teaser' },
         { type: 'image', url: '/projects/photography/1_Infrared Florals.png', caption: 'Infrared Florals' },
         { type: 'image', url: '/projects/photography/2_DSF6354.png', caption: 'Urban Landscape' },
         { type: 'image', url: '/projects/photography/3_Hailey Lifestyle.png', caption: 'Hailey Lifestyle' },

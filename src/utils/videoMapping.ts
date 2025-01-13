@@ -1,4 +1,4 @@
-// Map of original video paths to their compressed versions
+// Map of original video paths to their compressed versions or external URLs
 export const videoMapping: Record<string, string> = {
   // Hero video
   '/videos/purplefluid_bg.mp4': '/compressed_videos/purplefluid_bg_compressed.mp4',
@@ -26,12 +26,12 @@ export const videoMapping: Record<string, string> = {
   '/projects/showcase/stopmotion/Squirell_3.mp4': '/compressed_videos/squirell_3_compressed.mp4',
   
   // Photography videos
-  '/projects/photography/alisha_reel_2160p.mp4': '/compressed_videos/alisha_reel_compressed.mp4',
+  '/projects/photography/alisha_reel_2160p.mp4': 'https://www.youtube.com/watch?v=U8DK525GuiU',
   '/projects/photography/Charlie\'s Story Teaser Our Stories_ In Vivid Color.mp4': '/compressed_videos/charlie_story_teaser_compressed.mp4',
   '/projects/photography/Our Stories_ In Vivid Color Official Teaser OurStoriesInVividColor.mp4': '/compressed_videos/our_stories_teaser_compressed.mp4'
 };
 
-// Helper function to get compressed video path
+// Helper function to get compressed video path or external URL
 export const getCompressedVideo = (originalPath: string): string => {
   return videoMapping[originalPath] || originalPath;
 }; 

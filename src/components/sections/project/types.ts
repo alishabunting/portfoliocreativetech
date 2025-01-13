@@ -1,11 +1,13 @@
-export interface WebSite {
+export interface Website {
   url: string;
   name: string;
   description: string;
 }
 
-export interface WebProject extends Project {
-  websites: WebSite[];
+export interface MediaItem {
+  type: 'image' | 'video' | 'youtube';
+  url: string;
+  caption: string;
 }
 
 export interface Project {
@@ -14,8 +16,8 @@ export interface Project {
   image: string;
   description: string;
   tags: string[];
-  gallery: { type: string; url: string; caption: string }[];
-  websites?: WebSite[];
+  gallery: MediaItem[];
+  websites?: Website[];
 }
 
 export interface ProjectCardProps {
