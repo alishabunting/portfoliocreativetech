@@ -1,15 +1,18 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { MediaItem } from './types';
 import YouTubeEmbed from './YouTubeEmbed';
 import {
   CarouselContainer,
+  CarouselTrack,
   CarouselSlide,
-  CarouselNavigation,
   CarouselButton,
-  CarouselDots,
-  CarouselDot,
-  MediaCaption
+  FullScreenCarousel,
+  FullScreenSlide,
+  FullScreenClose,
+  FullScreenNavigation,
+  FullScreenButton,
+  FullScreenCaption
 } from './styles';
 
 interface CarouselProps {
@@ -25,62 +28,123 @@ const Carousel: React.FC<CarouselProps> = ({
   currentSlide,
   onNext,
   onPrev,
-  onGoToSlide,
+  onGoToSlide
 }) => {
-  const currentMedia = gallery[currentSlide];
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [fullScreenSlide, setFullScreenSlide] = useState(0);
+
+  const handleImageClick = (index: number) => {
+    setFullScreenSlide(index);
+    setIsFullScreen(true);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeFullScreen = () => {
+    setIsFullScreen(false);
+    document.body.style.overflow = '';
+  };
+
+  const nextFullScreenSlide = () => {
+    setFullScreenSlide((prev) =>
+      prev === gallery.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const prevFullScreenSlide = () => {
+    setFullScreenSlide((prev) =>
+      prev === 0 ? gallery.length - 1 : prev - 1
+    );
+  };
 
   return (
-    <CarouselContainer>
-      <CarouselSlide>
-        {currentMedia.type === 'image' && (
-          <motion.img
-            src={currentMedia.url}
-            alt={currentMedia.caption}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          />
-        )}
-        {currentMedia.type === 'video' && (
-          <motion.video
-            controls
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <source src={currentMedia.url} type="video/mp4" />
-            Your browser does not support the video tag.
-          </motion.video>
-        )}
-        {currentMedia.type === 'youtube' && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <YouTubeEmbed url={currentMedia.url} />
-          </motion.div>
-        )}
-        <MediaCaption>{currentMedia.caption}</MediaCaption>
-      </CarouselSlide>
+    <>
+      <CarouselContainer>
+        <CarouselTrack
+          as={motion.div}
+          animate={{ x: `${-currentSlide * 100}%` }}
+          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        >
+          <AnimatePresence initial={false}>
+            {gallery.map((item, index) => (
+              <CarouselSlide 
+                key={index}
+                onClick={() => handleImageClick(index)}
+              >
+                {item.type === 'video' && (
+                  <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    src={item.url}
+                  />
+                )}
+                {item.type === 'image' && (
+                  <img src={item.url} alt={item.caption || ''} />
+                )}
+                {item.type === 'youtube' && (
+                  <div className="youtube-container">
+                    <YouTubeEmbed url={item.url} />
+                  </div>
+                )}
+              </CarouselSlide>
+            ))}
+          </AnimatePresence>
+        </CarouselTrack>
 
-      <CarouselNavigation>
-        <CarouselButton onClick={onPrev}>Previous</CarouselButton>
-        <CarouselDots>
-          {gallery.map((_, index) => (
-            <CarouselDot
-              key={index}
-              active={index === currentSlide}
-              onClick={() => onGoToSlide(index)}
-            />
-          ))}
-        </CarouselDots>
-        <CarouselButton onClick={onNext}>Next</CarouselButton>
-      </CarouselNavigation>
-    </CarouselContainer>
+        <CarouselButton className="prev" onClick={onPrev}>
+          ←
+        </CarouselButton>
+        <CarouselButton className="next" onClick={onNext}>
+          →
+        </CarouselButton>
+      </CarouselContainer>
+
+      <AnimatePresence>
+        {isFullScreen && (
+          <FullScreenCarousel
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <FullScreenClose onClick={closeFullScreen}>×</FullScreenClose>
+            
+            <FullScreenSlide>
+              {gallery[fullScreenSlide].type === 'video' ? (
+                <video
+                  controls
+                  autoPlay
+                  src={gallery[fullScreenSlide].url}
+                />
+              ) : gallery[fullScreenSlide].type === 'youtube' ? (
+                <div className="youtube-container">
+                  <YouTubeEmbed url={gallery[fullScreenSlide].url} />
+                </div>
+              ) : (
+                <img 
+                  src={gallery[fullScreenSlide].url} 
+                  alt={gallery[fullScreenSlide].caption || ''} 
+                />
+              )}
+            </FullScreenSlide>
+
+            <FullScreenCaption>
+              {gallery[fullScreenSlide].caption}
+            </FullScreenCaption>
+
+            <FullScreenNavigation>
+              <FullScreenButton onClick={prevFullScreenSlide}>
+                Previous
+              </FullScreenButton>
+              <FullScreenButton onClick={nextFullScreenSlide}>
+                Next
+              </FullScreenButton>
+            </FullScreenNavigation>
+          </FullScreenCarousel>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 

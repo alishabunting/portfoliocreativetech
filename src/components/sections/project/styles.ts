@@ -380,6 +380,24 @@ export const CarouselSlide = styled(motion.div)`
       filter: grayscale(0%) contrast(1);
     }
   }
+
+  .youtube-container {
+    width: 100%;
+    height: 100%;
+    filter: grayscale(100%) contrast(1.2);
+    transition: filter 500ms ease;
+    cursor: pointer;
+
+    &:hover {
+      filter: grayscale(0%) contrast(1);
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
 `;
 
 export const FullScreenCarousel = styled(motion.div)`
@@ -414,6 +432,19 @@ export const FullScreenSlide = styled(motion.div)`
 
   video {
     width: 90vw;
+  }
+
+  .youtube-container {
+    width: 90vw;
+    height: 90vh;
+    max-width: 160vh; /* 16:9 aspect ratio */
+    max-height: 90vh;
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
   }
 `;
 

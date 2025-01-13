@@ -4,8 +4,7 @@ import styled from 'styled-components';
 const VideoContainer = styled.div`
   position: relative;
   width: 100%;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  height: 0;
+  height: 100%;
   overflow: hidden;
   max-width: 100%;
 `;
@@ -17,6 +16,7 @@ const IframeWrapper = styled.iframe`
   width: 100%;
   height: 100%;
   border: 0;
+  background: var(--color-background);
 `;
 
 interface YouTubeEmbedProps {
@@ -26,7 +26,7 @@ interface YouTubeEmbedProps {
 const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({ url }) => {
   // Extract video ID from URL
   const videoId = url.split('v=')[1];
-  const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+  const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1&showinfo=0&rel=0`;
 
   return (
     <VideoContainer>
