@@ -1,12 +1,11 @@
 import React from 'react';
-import { BiographyContainer, BiographyColumn, BiographyParagraph, BiographyWrapper, BiographyImage, BiographyBanner } from '../../styles/about/Biography.styles';
+import { BiographyContainer, BiographyColumn, BiographyParagraph, BiographyWrapper, BiographyImage } from '../../styles/about/Biography.styles';
+import ShaderNameBanner from './ShaderNameBanner';
 
 const Biography: React.FC = () => {
   return (
     <>
-      <BiographyBanner>
-        <img src="https://via.placeholder.com/1920x540/2a2a2a/808080?text=BIOGRAPHY+%7C+CREATIVE+TECHNOLOGIST+%7C+ARTIST+%7C+EDUCATOR" alt="Biography banner" />
-      </BiographyBanner>
+      <ShaderNameBanner />
 
       <BiographyWrapper>
         <BiographyImage>

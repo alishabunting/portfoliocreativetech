@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { ModuleContainer } from './common/Section.styles';
 
 interface ThemeProps {
   theme: {
@@ -76,7 +77,8 @@ export const CareerInner = styled.div`
 
 export const CareerTitle = styled(motion.h2)`
   font-size: clamp(2.5rem, 6vw, 6rem);
-  font-weight: 900;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--color-text);
   margin-bottom: clamp(6rem, 8vw, 10rem);
@@ -198,6 +200,7 @@ export const RoleHeader = styled.div<ThemeProps>`
 
   h3 {
     font-size: clamp(1rem, 1.2vw, 1.25rem);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     text-transform: uppercase;
     letter-spacing: 0.2em;
     color: var(--color-accent);
@@ -230,7 +233,8 @@ export const RoleHeader = styled.div<ThemeProps>`
 
   h4 {
     font-size: clamp(2rem, 3.5vw, 4rem);
-    font-weight: 900;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 700;
     line-height: 1.1;
     color: var(--color-text);
     text-transform: uppercase;
@@ -282,10 +286,10 @@ export const RoleHeader = styled.div<ThemeProps>`
 
   .duration {
     font-size: clamp(1rem, 1.2vw, 1.25rem);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     opacity: ${({ theme }) => theme.mode === 'light' ? '0.7' : '0.6'};
-    font-family: 'Courier New', monospace;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -452,30 +456,67 @@ export const AchievementsList = styled(ResponsibilitiesList)`
   }
 `;
 
-export const ResponsibilitiesModule = styled(ContentModule)`
-  height: 100%;
+const BaseModule = styled(ModuleContainer)`
   padding: clamp(2.5rem, 3.5vw, 4.5rem);
   display: flex;
   flex-direction: column;
+  background: ${({ theme }) => theme.mode === 'light' 
+    ? 'linear-gradient(to bottom right, #fff, #f8f8f8)' 
+    : 'rgba(255, 255, 255, 0.03)'};
+  border: ${({ theme }) => theme.mode === 'light' 
+    ? '1px solid rgba(0, 0, 0, 0.1)' 
+    : '1px solid rgba(255, 255, 255, 0.1)'};
+  border-radius: clamp(16px, 2vw, 24px);
+  
+  h5 {
+    font-size: clamp(1rem, 1.2vw, 1.25rem);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--color-accent);
+    position: relative;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: ${({ theme }) => theme.mode === 'light' 
+      ? 'rgba(0, 0, 0, 0.03)' 
+      : 'rgba(255, 255, 255, 0.05)'};
+    z-index: 1;
+    margin: 0 0 1.5rem 0;
+    font-weight: 600;
+    box-shadow: ${({ theme }) => theme.mode === 'light'
+      ? 'inset 0 2px 4px rgba(0, 0, 0, 0.03)'
+      : 'none'};
+    
+    &::before {
+      content: '[';
+      margin-right: 0.5rem;
+      color: var(--color-accent);
+      opacity: ${({ theme }) => theme.mode === 'light' ? '0.7' : '0.5'};
+    }
+    
+    &::after {
+      content: ']';
+      margin-left: 0.5rem;
+      color: var(--color-accent);
+      opacity: ${({ theme }) => theme.mode === 'light' ? '0.7' : '0.5'};
+    }
+  }
 `;
 
-export const TechModule = styled(ContentModule)`
-  padding: clamp(2.5rem, 3.5vw, 4.5rem);
-  display: flex;
-  flex-direction: column;
+export const ResponsibilitiesModule = styled(BaseModule)`
+  flex: 1;
+  height: 100%;
+`;
+
+export const TechModule = styled(BaseModule)`
   flex: 0.8;
 `;
 
-export const ClientsModule = styled(ContentModule)`
-  padding: clamp(2.5rem, 3.5vw, 4.5rem);
-  display: flex;
-  flex-direction: column;
+export const ClientsModule = styled(BaseModule)`
   flex: 1.2;
+  margin-bottom: 1.5rem;
 `;
 
-export const AchievementsModule = styled(ContentModule)`
-  padding: clamp(2.5rem, 3.5vw, 4.5rem);
-  display: flex;
-  flex-direction: column;
+export const AchievementsModule = styled(BaseModule)`
   flex: 1.2;
 `; 

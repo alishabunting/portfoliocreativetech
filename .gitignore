@@ -29,6 +29,5 @@ yarn-error.log*
 *.mp4
 public/**/*.mp4
 
-# Agent instructions
-.agent-instructions/
+
 .cursor/ 
