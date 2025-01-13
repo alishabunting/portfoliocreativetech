@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+import { getCompressedVideo } from '../../utils/videoMapping';
 
 const Section = styled.section`
   padding: var(--spacing-section) 0;
@@ -128,7 +129,7 @@ interface Showcase {
   media: ShowcaseMedia;
 }
 
-const showcases = [
+const showcases: Showcase[] = [
   {
     title: 'Stop Motion Animation',
     icon: '🎬',
@@ -144,10 +145,10 @@ const showcases = [
     media: {
       preview: '/showcase/stopmotion-preview.jpg',
       samples: [
-        { type: 'video', url: '/showcase/stopmotion-1.mp4' },
-        { type: 'image', url: '/showcase/stopmotion-2.jpg' },
-        { type: 'video', url: '/showcase/stopmotion-3.mp4' },
-        { type: 'image', url: '/showcase/stopmotion-4.jpg' }
+        { type: 'video' as const, url: getCompressedVideo('/showcase/stopmotion-1.mp4') },
+        { type: 'image' as const, url: '/showcase/stopmotion-2.jpg' },
+        { type: 'video' as const, url: getCompressedVideo('/showcase/stopmotion-3.mp4') },
+        { type: 'image' as const, url: '/showcase/stopmotion-4.jpg' }
       ]
     }
   },
@@ -188,10 +189,10 @@ const showcases = [
     media: {
       preview: '/showcase/vfx-preview.jpg',
       samples: [
-        { type: 'video', url: '/showcase/vfx-1.mp4' },
-        { type: 'image', url: '/showcase/vfx-2.jpg' },
-        { type: 'video', url: '/showcase/vfx-3.mp4' },
-        { type: 'image', url: '/showcase/vfx-4.jpg' }
+        { type: 'video' as const, url: getCompressedVideo('/showcase/vfx-1.mp4') },
+        { type: 'image' as const, url: '/showcase/vfx-2.jpg' },
+        { type: 'video' as const, url: getCompressedVideo('/showcase/vfx-3.mp4') },
+        { type: 'image' as const, url: '/showcase/vfx-4.jpg' }
       ]
     }
   },

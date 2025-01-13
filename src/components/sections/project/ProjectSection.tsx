@@ -20,6 +20,7 @@ import {
   CarouselWrapper,
   ScrollableContent
 } from './styles';
+import { getCompressedVideo } from '../../../utils/videoMapping';
 
 const ProjectSection: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -44,15 +45,15 @@ const ProjectSection: React.FC = () => {
     {
       title: "Pedigree Fosterverse",
       category: "Metaverse & Social Impact",
-      image: "/projects/pedigree/design-sample.mp4",
+      image: getCompressedVideo("/projects/pedigree/design-sample.mp4"),
       description: "Metaverse initiative connecting virtual pet ownership with real-world dog fostering.",
       tags: ["Metaverse", "Social Impact", "Web3"],
       gallery: [
         { type: 'image', url: '/projects/pedigree/thumbnail.jpg', caption: 'Project Showcase' },
         { type: 'image', url: '/projects/pedigree/hero.jpg', caption: 'Hero Display' },
         { type: 'image', url: '/projects/pedigree/showcase.jpg', caption: 'Pedigree Fosterverse Experience' },
-        { type: 'video', url: '/projects/pedigree/feature-demo.mp4', caption: 'Main Experience Overview' },
-        { type: 'video', url: '/projects/pedigree/main-video.mp4', caption: 'Feature Demonstration' },
+        { type: 'video', url: getCompressedVideo('/projects/pedigree/feature-demo.mp4'), caption: 'Main Experience Overview' },
+        { type: 'video', url: getCompressedVideo('/projects/pedigree/main-video.mp4'), caption: 'Feature Demonstration' },
         { type: 'image', url: '/projects/pedigree/Dog Lovers_16-9.jpg', caption: 'Dog Lovers Community' },
         { type: 'image', url: '/projects/pedigree/PedigreeFosterverseKV.png', caption: 'Fosterverse Key Visual' },
         { type: 'image', url: '/projects/pedigree/hero.jpg', caption: 'Hero Display' }
@@ -61,13 +62,13 @@ const ProjectSection: React.FC = () => {
     {
       title: "Ray-Ban Stories",
       category: "Digital Innovation & AR",
-      image: "/projects/rayban/RBS_SPSU_20220427_KV2MKT5050_WAYF_SHINYBLACK_G15_1920x1080_06_EN.mp4",
+      image: getCompressedVideo("/projects/rayban/RBS_SPSU_20220427_KV2MKT5050_WAYF_SHINYBLACK_G15_1920x1080_06_EN.mp4"),
       description: "Innovative AR experience for Ray-Ban Stories launch, combining digital and physical retail spaces.",
       tags: ["AR", "Digital Innovation", "Retail Experience"],
       gallery: [
         { type: 'image', url: '/projects/rayban/hero.jpg', caption: 'Ray-Ban Stories Launch' },
         { type: 'image', url: '/projects/rayban/showcase.jpg', caption: 'Digital Integration' },
-        { type: 'video', url: '/projects/rayban/main-video.mp4', caption: 'Feature Demonstration' },
+        { type: 'video', url: getCompressedVideo('/projects/rayban/main-video.mp4'), caption: 'Feature Demonstration' },
         { type: 'image', url: '/projects/rayban/RBS_SPSU_20220419_KV2MKTWIDE_WAYF_SHINYBLACK_CLEAR_1920x1080_NA_EN.jpg', caption: 'Marketing Wide Display' },
         { type: 'image', url: '/projects/rayban/RBS_SPSU_20220420_PRODUCTLISTENPIN_WAYF_SHINYBLACK_G15_1000x1500_NA_EN.jpg', caption: 'Product Listen Pin' },
         { type: 'image', url: '/projects/rayban/RBS_SPSU_20220422_PRODUCTCAPTUREPIN_WAYF_SHINYBLACK_G15_1000x1500_NA_EN.jpg', caption: 'Product Capture Pin' },
@@ -139,13 +140,13 @@ const ProjectSection: React.FC = () => {
     {
       title: "Photography",
       category: "Visual Arts & Gallery",
-      image: "/projects/photography/Our Stories_ In Vivid Color Official Teaser OurStoriesInVividColor.mp4",
+      image: getCompressedVideo("/projects/photography/Our Stories_ In Vivid Color Official Teaser OurStoriesInVividColor.mp4"),
       description: "A curated collection of photographic works showcasing visual storytelling through the lens, featuring a diverse range of styles from infrared to lifestyle photography.",
       tags: ["Photography", "Visual Arts", "Digital Media"],
       gallery: [
-        { type: 'video', url: '/projects/photography/alisha_tené_bunting_reel (2160p).mp4', caption: 'Alisha Tené Bunting Reel' },
-        { type: 'video', url: '/projects/photography/Charlie\'s Story Teaser Our Stories_ In Vivid Color.mp4', caption: 'Charlie\'s Story Teaser' },
-        { type: 'video', url: '/projects/photography/Our Stories_ In Vivid Color Official Teaser OurStoriesInVividColor.mp4', caption: 'Our Stories In Vivid Color Teaser' },
+        { type: 'video', url: getCompressedVideo('/projects/photography/alisha_reel_2160p.mp4'), caption: 'Alisha Tené Bunting Reel' },
+        { type: 'video', url: getCompressedVideo('/projects/photography/Charlie\'s Story Teaser Our Stories_ In Vivid Color.mp4'), caption: 'Charlie\'s Story Teaser' },
+        { type: 'video', url: getCompressedVideo('/projects/photography/Our Stories_ In Vivid Color Official Teaser OurStoriesInVividColor.mp4'), caption: 'Our Stories In Vivid Color Teaser' },
         { type: 'image', url: '/projects/photography/1_Infrared Florals.png', caption: 'Infrared Florals' },
         { type: 'image', url: '/projects/photography/2_DSF6354.png', caption: 'Urban Landscape' },
         { type: 'image', url: '/projects/photography/3_Hailey Lifestyle.png', caption: 'Hailey Lifestyle' },

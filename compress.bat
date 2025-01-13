@@ -1,0 +1,2 @@
+@echo off
+"I:\ffmpeg\ffmpeg-2025-01-08-git-251de1791e-full_build\bin\ffmpeg.exe" -y -i "public/videos/purplefluid_bg.mp4" -c:v libx264 -crf 28 -preset medium -c:a aac -b:a 128k "I:/compressed_videos/purplefluid_bg_compressed.mp4" 

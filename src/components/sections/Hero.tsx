@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { getCompressedVideo } from '../../utils/videoMapping';
 
 const HeroSection = styled.section`
   position: relative;
@@ -179,11 +180,11 @@ const ScrollIndicator = styled.div`
   }
 `;
 
-const Hero = () => {
+const Hero: React.FC = () => {
   return (
     <HeroSection>
       <VideoBackground autoPlay muted loop playsInline>
-        <source src="/videos/purplefluid_bg.mp4" type="video/mp4" />
+        <source src={getCompressedVideo('/videos/purplefluid_bg.mp4')} type="video/mp4" />
       </VideoBackground>
       <Overlay />
       

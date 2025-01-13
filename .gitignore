@@ -28,4 +28,11 @@ yarn-error.log*
 # Large files
 public/projects/showcase/stopmotion/Squirell_3.mp4
 "public/projects/photography/alisha_tené_bunting_reel (2160p).mp4"
-*.mp4 
+
+# Exclude original videos but include compressed ones
+public/projects/**/*.mp4
+!public/compressed_videos/*.mp4
+
+# Agent instructions
+.agent-instructions/
+.cursor/ 
