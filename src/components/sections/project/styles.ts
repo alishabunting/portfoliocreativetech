@@ -186,9 +186,10 @@ export const ExpandedContent = styled.div`
 export const ProjectInfo = styled.div`
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 50vh);
-  margin-top: 1.5rem;
+  min-height: 50vh;
+  margin-top: 1.25rem;
   position: relative;
+  padding: 0 1rem;
 
   /* Custom scrollbar styling */
   &::-webkit-scrollbar {
@@ -233,18 +234,6 @@ export const ScrollableContent = styled.div`
   overflow-y: auto;
   padding: 2rem;
   height: 100%;
-  
-  /* Fade effect at the top */
-  &::before {
-    content: '';
-    position: sticky;
-    top: 0;
-    display: block;
-    height: 2rem;
-    margin: -2rem -2rem 0;
-    background: linear-gradient(var(--color-background), transparent);
-    z-index: 1;
-  }
 `;
 
 export const ProjectDescription = styled.div`
@@ -302,6 +291,7 @@ export const ProjectTags = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+  margin-top: 3rem;
 `;
 
 export const Tag = styled.span`

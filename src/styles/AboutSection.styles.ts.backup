@@ -186,26 +186,6 @@ export const RoleHeader = styled.div<ThemeProps>`
     z-index: 0;
   }
 
-  /* Technical Grid Pattern */
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 2px,
-      var(--color-border) 2px,
-      var(--color-border) 3px
-    );
-    opacity: ${({ theme }) => theme.mode === 'light' ? '0.03' : '0.02'};
-    z-index: 0;
-    pointer-events: none;
-  }
-
   .role-container {
     position: relative;
     z-index: 1;
@@ -225,17 +205,6 @@ export const RoleHeader = styled.div<ThemeProps>`
     gap: 1.5rem;
     width: 100%;
     overflow: visible;
-    padding-right: 1.5rem;
-
-    h4 {
-      font-size: clamp(1.85rem, 2.625vw, 2.625rem);
-      font-weight: 700;
-      line-height: 1.2;
-      color: var(--color-text);
-      white-space: pre-wrap;
-      word-break: break-word;
-      padding-right: 1rem;
-    }
   }
 
   h3 {
@@ -451,15 +420,12 @@ export const ResponsibilitiesList = styled.ul`
   margin: 0;
   display: grid;
   gap: 1rem;
-  position: relative;
-  z-index: 1;
 
   li {
     position: relative;
-    padding-left: clamp(2rem, 2.5vw, 3rem);
+    padding-left: clamp(1.5rem, 2vw, 2rem);
     font-size: clamp(0.9rem, 1.1vw, 1.2rem);
-    line-height: 1.6;
-    margin-bottom: 1rem;
+    line-height: 1.4;
 
     &::before {
       content: '→';
@@ -468,32 +434,6 @@ export const ResponsibilitiesList = styled.ul`
       color: var(--color-accent);
       font-weight: 600;
       opacity: 0.7;
-      font-family: monospace;
-    }
-
-    /* Technical measurement line */
-    &::after {
-      content: '';
-      position: absolute;
-      left: 0.5rem;
-      top: 50%;
-      width: 1rem;
-      height: 1px;
-      background: var(--color-accent);
-      opacity: 0.3;
-      transform: translateY(-50%);
-    }
-
-    /* Index numbers */
-    &:before {
-      content: attr(data-index);
-      position: absolute;
-      left: 0;
-      font-family: 'Helvetica Neue', monospace;
-      font-size: 0.75rem;
-      color: var(--color-accent);
-      opacity: 0.5;
-      font-weight: normal;
     }
   }
 `;
@@ -581,39 +521,6 @@ export const ResponsibilitiesModule = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  position: relative;
-  overflow: hidden;
-
-  /* Technical Grid Background */
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-      linear-gradient(to right, var(--color-border) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--color-border) 1px, transparent 1px);
-    background-size: 40px 40px;
-    opacity: ${({ theme }) => theme.mode === 'light' ? '0.03' : '0.02'};
-    z-index: 0;
-  }
-
-  /* Architectural Corner Element */
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100px;
-    height: 100px;
-    background: 
-      linear-gradient(45deg, transparent 48%, var(--color-border) 49%, var(--color-border) 51%, transparent 52%),
-      linear-gradient(-45deg, transparent 48%, var(--color-border) 49%, var(--color-border) 51%, transparent 52%);
-    opacity: ${({ theme }) => theme.mode === 'light' ? '0.1' : '0.05'};
-    z-index: 0;
-  }
 
   h5 {
     font-size: clamp(1rem, 1.2vw, 1.25rem);

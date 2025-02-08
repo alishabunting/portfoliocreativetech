@@ -37,6 +37,9 @@ const CareerRole: React.FC<CareerRoleProps> = ({ role, clients, tech, achievemen
     if (title === "Digital Media Tutor & Teaching Assistant") {
       return "Digital Media\nTutor & Teaching\nAssistant";
     }
+    if (title === "Communications Director") {
+      return "Communications\nDirector";
+    }
     return title;
   };
 
@@ -50,12 +53,13 @@ const CareerRole: React.FC<CareerRoleProps> = ({ role, clients, tech, achievemen
       <ModuleRow>
         <RoleHeader>
           <div className="role-container">
-            <h3>{role.company}</h3>
-            <h4>{formatTitle(role.title)}</h4>
-          </div>
-          
-          <div className="meta-info">
-            <div className="duration-container">
+            <div className="title-section">
+              <h3>{role.company}</h3>
+              <h4>{formatTitle(role.title)}</h4>
+            </div>
+            
+            <div className="meta-info">
+            <div className="divider" />
               <div className="duration">{role.duration}</div>
               <div className="location">{role.location}</div>
             </div>
@@ -68,22 +72,18 @@ const CareerRole: React.FC<CareerRoleProps> = ({ role, clients, tech, achievemen
           <h5>Responsibilities</h5>
           <ResponsibilitiesList>
             {role.responsibilities.map((item, index) => (
-              <li key={index}>{item}</li>
+              <li 
+                key={index}
+                data-index={`[${String(index + 1).padStart(2, '0')}]`}
+              >
+                {item}
+              </li>
             ))}
           </ResponsibilitiesList>
         </ResponsibilitiesModule>
 
         <TechClientColumn>
-          {clients.length > 0 ? (
-            <ClientsModule>
-              <h5>Key Clients</h5>
-              <TagsList>
-                {clients.map((client, index) => (
-                  <li key={index}>{client}</li>
-                ))}
-              </TagsList>
-            </ClientsModule>
-          ) : (
+          {achievements.length > 0 && (
             <AchievementsModule>
               <h5>Key Achievements</h5>
               <AchievementsList>
@@ -92,6 +92,17 @@ const CareerRole: React.FC<CareerRoleProps> = ({ role, clients, tech, achievemen
                 ))}
               </AchievementsList>
             </AchievementsModule>
+          )}
+
+          {clients.length > 0 && (
+            <ClientsModule>
+              <h5>Key Clients</h5>
+              <TagsList>
+                {clients.map((client, index) => (
+                  <li key={index}>{client}</li>
+                ))}
+              </TagsList>
+            </ClientsModule>
           )}
 
           <TechModule>

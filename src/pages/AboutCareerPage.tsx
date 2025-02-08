@@ -16,6 +16,7 @@ const ContentContainer = styled.div`
   max-width: var(--spacing-container);
   margin: 0 auto;
   padding: 0 2rem;
+  overflow: visible; // Ensure content isn't being clipped
 `;
 
 const EducationAndSpeaking = styled.div`
