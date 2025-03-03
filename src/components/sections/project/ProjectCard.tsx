@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { ProjectCardProps } from './types';
@@ -117,6 +117,15 @@ const ProjectTitle = styled.h2`
   text-transform: uppercase;
   color: white;
   transition: color 500ms ease;
+  margin-bottom: 0.25rem;
+`;
+
+const ProjectAgency = styled.span`
+  font-size: var(--font-size-caption);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+  display: block;
   margin-bottom: 0.5rem;
 `;
 
@@ -127,9 +136,56 @@ const ProjectCategory = styled.span`
   opacity: 0.4;
 `;
 
+const AnimatedPreview = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    filter: grayscale(100%) contrast(1.2);
+  }
+
+  img.active {
+    opacity: 1;
+  }
+
+  &:hover img {
+    filter: grayscale(0%) contrast(1);
+  }
+`;
+
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClick }) => {
   const formattedIndex = String(index + 1).padStart(2, '0');
   const isWebProject = project.category === 'Web';
+  const [currentPreviewIndex, setCurrentPreviewIndex] = useState(0);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    
+    if (project.videoPreview?.thumbnails) {
+      interval = setInterval(() => {
+        setCurrentPreviewIndex(prev => 
+          (prev + 1) % project.videoPreview!.thumbnails.length
+        );
+      }, 1000); // Change thumbnail every second
+    }
+
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [project.videoPreview]);
 
   return (
     <Card
@@ -142,6 +198,17 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClick }) =>
       <ProjectBackground>
         {isWebProject ? (
           <WebPreview className="project-image" />
+        ) : project.videoPreview ? (
+          <AnimatedPreview>
+            {project.videoPreview.thumbnails.map((thumb, i) => (
+              <img 
+                key={i}
+                src={thumb}
+                alt={`${project.title} preview ${i + 1}`}
+                className={i === currentPreviewIndex ? 'active' : ''}
+              />
+            ))}
+          </AnimatedPreview>
         ) : project.image.match(/\.(mp4|mov|webm)$/i) ? (
           <video 
             src={project.image}
@@ -163,6 +230,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClick }) =>
         <ProjectNumber>{formattedIndex}</ProjectNumber>
         <div>
           <ProjectTitle className="project-title">{project.title}</ProjectTitle>
+          {project.agency && <ProjectAgency>Agency: {project.agency}</ProjectAgency>}
           <ProjectCategory>{project.category}</ProjectCategory>
         </div>
       </ProjectContent>

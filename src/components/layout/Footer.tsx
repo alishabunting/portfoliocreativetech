@@ -62,9 +62,9 @@ const Footer = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://www.linkedin.com/in/alisha-bunting/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="https://x.com/AlishaBuntingDA" target="_blank" rel="noopener noreferrer">Twitter</a>
+          <a href="https://github.com/alishabunting" target="_blank" rel="noopener noreferrer">GitHub</a>
         </SocialLinks>
       </FooterContent>
     </FooterContainer>

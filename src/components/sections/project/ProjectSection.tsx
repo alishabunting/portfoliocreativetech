@@ -13,6 +13,7 @@ import {
   ExpandedContent,
   ProjectInfo,
   ExpandedTitle,
+  ExpandedAgency,
   ProjectDescription,
   ProjectTags,
   Tag,
@@ -29,12 +30,15 @@ const ProjectSection: React.FC = () => {
 
   const projects: Project[] = [
     {
-      title: "Bacardi",
-      category: "Experiential & Digital",
-      image: "/projects/bacardi/gettyimages-1496827987-2048x2048.jpg",
-      description: "Immersive brand experience combining physical and digital elements for Bacardi's event spaces.",
+      title: "BACARDÍ® x Stadium Goods SNEAK3ASY",
+      category: "Experiential & WEB3",
+      image: getCompressedVideo("/projects/bacardi/feature-demo.mp4"),
+      description: "A groundbreaking collaboration between Bacardi and legendary designer Jeff Staple, merging physical and digital realms in an innovative speakeasy experience. Technical partner, Kollectiff orchestrated a seamless integration of technology and experiential elements. The project transformed a Stadium Goods location into an interactive journey, beginning with an exclusive pop-up shop that led to a hidden speakeasy featuring live DJ performances. Through custom-built web applications and Eventbrite integration, guests received airdropped NFTs and discovered strategically placed QR codes throughout the venue, enabling real-time customization of digital sneakers co-designed by Bacardi and Jeff Staple. This cutting-edge fusion of sneaker culture and blockchain technology culminated in select winners having their digital designs transformed into physical, limited-edition sneakers, bridging the gap between digital ownership and tangible collectibles in this unique brand activation.",
       tags: ["Experiential", "Digital Integration", "Brand Experience"],
+      agency: "BBDO",
       gallery: [
+        { type: 'video', url: getCompressedVideo('/projects/bacardi/feature-demo.mp4'), caption: 'Feature Demo' },
+        { type: 'video', url: getCompressedVideo('/projects/bacardi/main-video.mp4'), caption: 'Main Experience Video' },
         { type: 'image', url: '/projects/bacardi/gettyimages-1496827987-2048x2048.jpg', caption: 'Event Space Detail' },
         { type: 'image', url: '/projects/bacardi/gettyimages-1496828006-2048x2048.jpg', caption: 'Interactive Experience' },
         { type: 'image', url: '/projects/bacardi/gettyimages-1496828130-2048x2048.jpg', caption: 'Interactive Bar Display' },
@@ -44,10 +48,11 @@ const ProjectSection: React.FC = () => {
       ]
     },
     {
-      title: "Pedigree Fosterverse",
+      title: "®Pedigree Fosterverse",
       category: "Metaverse & Social Impact",
       image: getCompressedVideo("/projects/pedigree/design-sample.mp4"),
-      description: "Metaverse initiative connecting virtual pet ownership with real-world dog fostering.",
+      description: "A metaverse initiative that bridges virtual and real-world pet adoption through digital twins of 28 shelter dog breeds. In partnership with Adopt-a-Pet and the Pedigree Foundation, we created an innovative system where each digital twin in Decentraland serves as an interactive NPC chatbot, mirroring real adoptable dogs from the Adopt-a-Pet database. Users can engage with virtual dogs to learn about adoption opportunities, donate to the Pedigree Foundation's mission to end dog homelessness, and participate in mini-games. The experience rewards Decentraland landholders who foster virtual dogs with limited-edition NFT wearables, effectively turning virtual properties into digital awareness billboards for pet adoption. This pioneering approach combines Web3 technology with social impact, creating an emotionally resonant experience that reimagines pet adoption for the digital age.",
+      agency: "BBDO",
       tags: ["Metaverse", "Social Impact", "Web3"],
       gallery: [
         { type: 'image', url: '/projects/pedigree/thumbnail.jpg', caption: 'Project Showcase' },
@@ -61,11 +66,12 @@ const ProjectSection: React.FC = () => {
       ]
     },
     {
-      title: "Ray-Ban Stories",
-      category: "Digital Innovation & AR",
+      title: "Ray-Ban® Stories",
+      category: "Digital Production & Transcreation",
       image: getCompressedVideo("/projects/rayban/RBS_SPSU_20220427_KV2MKT5050_WAYF_SHINYBLACK_G15_1920x1080_06_EN.mp4"),
-      description: "Innovative AR experience for Ray-Ban Stories launch, combining digital and physical retail spaces.",
-      tags: ["AR", "Digital Innovation", "Retail Experience"],
+      description: "A comprehensive multi-region launch campaign for Ray-Ban Stories, executed in partnership with Meta and Luxottica across the US, UK, and Italian markets. Led the production and transcreation of digital assets for the Spring/Summer collection, encompassing social media videos, digital display banners, and social image assets. The project required careful adaptation of brand messaging and creative elements to resonate with distinct regional audiences while maintaining Ray-Ban's iconic brand identity. This strategic collaboration resulted in cohesive yet culturally nuanced digital experiences across all target markets.",
+      agency: "BBDO, ∞ META",
+      tags: ["Transcreation", "Digital Innovation", "Social Media", "Regional Launch"],
       gallery: [
         { type: 'image', url: '/projects/rayban/hero.jpg', caption: 'Ray-Ban Stories Launch' },
         { type: 'image', url: '/projects/rayban/showcase.jpg', caption: 'Digital Integration' },
@@ -81,10 +87,21 @@ const ProjectSection: React.FC = () => {
     {
       title: "Home Depot & Roblox",
       category: "Gaming & Retail Innovation",
-      image: "/projects/homedepot/thumbnail.jpg",
-      description: "Interactive gaming experience merging Home Depot's retail expertise with Roblox's immersive platform.",
+      image: "https://i.ytimg.com/vi_webp/afs4cMoOzzo/maxresdefault.webp",
+      videoPreview: {
+        type: 'youtube',
+        id: 'afs4cMoOzzo',
+        thumbnails: [
+          'https://i.ytimg.com/vi/afs4cMoOzzo/0.jpg',
+          'https://i.ytimg.com/vi/afs4cMoOzzo/1.jpg',
+          'https://i.ytimg.com/vi/afs4cMoOzzo/2.jpg',
+          'https://i.ytimg.com/vi/afs4cMoOzzo/3.jpg'
+        ]
+      },
+      description: "A Roblox integration bringing The Home Depot's hands-on learning experience into Roblox's Redcliff City. Produced the creative concept and gameplay development strategy through close collaboration with strategy, creative, business affairs, and client stakeholders to validate and refine the experience. This innovative virtual Kids Workshop reimagines DIY education for the next generation, featuring an immersive storefront complete with orange-aproned virtual associates. Players embark on engaging project builds across three difficulty levels - from crafting birdhouses to assembling mini cars - through an interactive scavenger hunt format. The experience seamlessly blends retail innovation with gamified learning, allowing young DIYers to collect materials throughout virtual aisles and assemble projects in a dedicated workshop space. Successfully completed builds become permanent, usable items within the Redcliff City environment, creating lasting value and encouraging creative problem-solving through hands-on virtual construction.",
       tags: ["Gaming", "Retail", "Metaverse", "Interactive"],
       gallery: [
+        { type: 'youtube', url: 'https://www.youtube.com/watch?v=afs4cMoOzzo', caption: 'Home Depot Roblox Experience Overview' },
         { type: 'image', url: '/projects/homedepot/hero.jpg', caption: 'Home Depot Roblox Experience' },
         { type: 'video', url: '/projects/homedepot/gameplay.mp4', caption: 'Gameplay Demo' },
         { type: 'image', url: '/projects/homedepot/interface.jpg', caption: 'User Interface' },
@@ -98,14 +115,20 @@ const ProjectSection: React.FC = () => {
       description: "Cutting-edge research and development projects exploring emerging technologies across VFX, Stop Motion, Voice AI, and 3D Modeling.",
       tags: ["VFX", "Stop Motion", "Voice AI", "3D Modeling", "Innovation"],
       gallery: [
+        { type: 'video', url: '/projects/showcase/stopmotion/Squirell_3.mp4', caption: 'Stop Motion Animation' },
         { type: 'video', url: '/projects/showcase/vfx/CONST_final_text.mp4', caption: 'Constellations Animation' },
         { type: 'video', url: '/projects/showcase/vfx/7670af44-bc30-4a8e-871b-2409a3d48af1.mp4', caption: 'VFX Showcase' },
         { type: 'video', url: '/projects/showcase/vfx/5eb0df95-e47b-45f9-be59-3986b5266734.mp4', caption: 'VFX Demo 1' },
         { type: 'video', url: '/projects/showcase/vfx/acf92f4c-bd15-4f71-88aa-b3b84054c42b.mp4', caption: 'VFX Demo 2' },
-        { type: 'video', url: '/projects/showcase/stopmotion/Squirell_3.mp4', caption: 'Stop Motion Animation' },
-        { type: 'image', url: '/projects/showcase/model/a7d77ebe-81cb-478f-a79f-f480ae8dc0a8.jpeg', caption: '3D Model 1' },
-        { type: 'image', url: '/projects/showcase/model/1d3c1621-1bde-48e0-9c1b-cbb7482f5c1f.jpeg', caption: '3D Model 2' },
-        { type: 'image', url: '/projects/showcase/model/663276f1-e984-47ad-ac9d-a56567fcc625.jpeg', caption: '3D Model 3' }
+        { type: 'image', url: '/projects/showcase/model/1.jpg', caption: 'Model 1' },
+        { type: 'image', url: '/projects/showcase/model/2.jpg', caption: 'Model 2' },
+        { type: 'image', url: '/projects/showcase/model/3.jpg', caption: 'Model 3' },
+        { type: 'image', url: '/projects/showcase/model/4.jpg', caption: 'Model 4' },
+        { type: 'image', url: '/projects/showcase/model/5.jpg', caption: 'Model 5' },
+        { type: 'image', url: '/projects/showcase/model/6.jpg', caption: 'Model 6' },
+        { type: 'image', url: '/projects/showcase/model/7.jpg', caption: 'Model 7' },
+        { type: 'image', url: '/projects/showcase/model/8.jpg', caption: 'Model 8' },
+        { type: 'image', url: '/projects/showcase/model/9.jpg', caption: 'Model 9' }
       ]
     },
     {
@@ -119,28 +142,28 @@ const ProjectSection: React.FC = () => {
         {
           url: "https://www.bbdola.com/",
           name: "BBDO LA",
-          description: "Digital platform showcasing innovative web design and user experience"
+          description: "Managed the agency's Squarespace website, ensuring consistent client updates, content transcription, and accessibility compliance. Maintained regular content updates to showcase the agency's work and capabilities."
         },
         {
           url: "https://admission.usc.edu",
           name: "USC Admissions",
-          description: "University of Southern California's admissions portal with interactive features"
+          description: "Managed critical web platforms for USC's Undergraduate Admissions, Graduate Admissions, Financial Aid, and Registrar offices. Led complex website redesign migration while maintaining continuous service and USC brand integrity."
         },
         {
           url: "https://letsbreakthrough.org",
           name: "Breakthrough",
-          description: "Platform for social impact and community engagement initiatives"
+          description: "Led end-to-end creative process and comprehensive website redesign as Creative Manager. Developed and executed in-house creative campaigns while managing content strategy across all organizational initiatives."
         },
         {
           url: "https://www.hemob.org",
-          name: "HEMOB",
-          description: "Healthcare and medical outreach organization's digital presence"
+          name: "The Coalition for Hemophilia B",
+          description: "Directed website redesign initiative and visual design as Communications Director. Established communication strategies and managed digital presence while strengthening partnerships with healthcare organizations."
         }
       ]
     },
     {
-      title: "Photography",
-      category: "Visual Arts & Gallery",
+      title: "VISUAL ARTS",
+      category: "PHOTO & VIDEO",
       image: getCompressedVideo("/projects/photography/Our Stories_ In Vivid Color Official Teaser OurStoriesInVividColor.mp4"),
       description: "A curated collection of photographic works showcasing visual storytelling through the lens, featuring a diverse range of styles from infrared to lifestyle photography.",
       tags: ["Photography", "Visual Arts", "Digital Media"],
@@ -234,6 +257,7 @@ const ProjectSection: React.FC = () => {
                 )}
                 <ProjectInfo>
                   <ExpandedTitle>{selectedProject.title}</ExpandedTitle>
+                  {selectedProject.agency && <ExpandedAgency>Agency: {selectedProject.agency}</ExpandedAgency>}
                   <ScrollableContent>
                     <ProjectDescription
                       dangerouslySetInnerHTML={{ __html: selectedProject.description }}

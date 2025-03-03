@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BiographyContainer, BiographyColumn, BiographyParagraph, BiographyWrapper, BiographyImage } from '../../styles/about/Biography.styles';
 import ShaderNameBanner from './ShaderNameBanner';
 
 const Biography: React.FC = () => {
   return (
     <>
-      <ShaderNameBanner />
+      <Suspense fallback={<div style={{ height: '400px', background: 'var(--color-background)' }} />}>
+        <ShaderNameBanner />
+      </Suspense>
 
       <BiographyWrapper>
         <BiographyImage>
-          <img src="https://via.placeholder.com/800x1200/2a2a2a/808080?text=Left+Image" alt="Left placeholder" />
+          <img 
+            src="/images/profile-1.jpg" 
+            alt="Alisha Tené Bunting"
+            onError={(e) => {
+              e.currentTarget.src = "https://via.placeholder.com/800x1200/2a2a2a/808080?text=Profile+Image";
+            }}
+          />
         </BiographyImage>
 
         <BiographyContainer>
@@ -72,7 +80,13 @@ const Biography: React.FC = () => {
         </BiographyContainer>
 
         <BiographyImage>
-          <img src="https://via.placeholder.com/800x1200/2a2a2a/808080?text=Right+Image" alt="Right placeholder" />
+          <img 
+            src="/images/profile-2.jpg"
+            alt="Alisha Tené Bunting"
+            onError={(e) => {
+              e.currentTarget.src = "https://via.placeholder.com/800x1200/2a2a2a/808080?text=Profile+Image";
+            }}
+          />
         </BiographyImage>
       </BiographyWrapper>
     </>

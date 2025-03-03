@@ -8,6 +8,7 @@ import CustomCursor from './components/layout/CustomCursor';
 import ThemeToggle from './components/ui/ThemeToggle';
 import AboutCareerPage from './pages/AboutCareerPage';
 import Contact from './pages/Contact';
+import AwardsBanner from './components/sections/AwardsBanner';
 import './styles/global.css';
 
 const GlobalStyle = createGlobalStyle`
@@ -27,6 +28,7 @@ const MainContent = styled.main`
 const HomePage = () => (
   <MainContent>
     <Hero />
+    <AwardsBanner />
     <ProjectSection />
     <Footer />
   </MainContent>

@@ -4,6 +4,12 @@ export interface Website {
   description: string;
 }
 
+export interface VideoPreview {
+  type: 'youtube';
+  id: string;
+  thumbnails: string[];
+}
+
 export interface MediaItem {
   type: 'image' | 'video' | 'youtube';
   url: string;
@@ -18,6 +24,8 @@ export interface Project {
   tags: string[];
   gallery: MediaItem[];
   websites?: Website[];
+  agency?: string;
+  videoPreview?: VideoPreview;
 }
 
 export interface ProjectCardProps {

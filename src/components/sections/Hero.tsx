@@ -113,49 +113,6 @@ const Description = styled(motion.p)`
   }
 `;
 
-const RoleHighlight = styled(motion.div)`
-  text-align: right;
-  
-  @media (max-width: 1023px) {
-    text-align: center;
-    order: 2;
-  }
-`;
-
-const RoleTitle = styled.h2`
-  font-size: var(--font-size-project);
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 1.5rem;
-  opacity: 0.8;
-`;
-
-const RoleTags = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: flex-end;
-
-  @media (max-width: 1023px) {
-    justify-content: center;
-  }
-`;
-
-const Tag = styled.span`
-  font-size: var(--font-size-caption);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  opacity: 0.6;
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--color-border);
-  border-radius: 2rem;
-  transition: all 300ms ease;
-
-  &:hover {
-    opacity: 0.8;
-  }
-`;
-
 const ScrollIndicator = styled.div`
   position: absolute;
   bottom: 3rem;
@@ -203,26 +160,9 @@ const Hero: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-           Creative Technologist, Artist, and Educator
+           Award-winning Creative Technologist, Artist, and Educator
           </Description>
         </TitleContent>
-
-        <RoleHighlight
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-        >
-          <RoleTitle>
-            Creative
-            <br />
-            Technologist
-          </RoleTitle>
-          <RoleTags>
-            <Tag>AI Implementation</Tag>
-            <Tag>Web3</Tag>
-            <Tag>Brand Experience</Tag>
-          </RoleTags>
-        </RoleHighlight>
       </Content>
 
       <ScrollIndicator>Scroll to explore</ScrollIndicator>

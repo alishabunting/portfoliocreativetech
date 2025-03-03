@@ -8,6 +8,11 @@ interface ThemeProps {
   };
 }
 
+interface StyledCareerRoleProps extends ThemeProps {
+  $isActive: boolean;
+  $index: number;
+}
+
 export const Section = styled.section`
   padding: var(--spacing-section) 0;
   background: var(--color-background);
@@ -70,8 +75,9 @@ export const Education = styled(motion.div)<ThemeProps>`
 
 export const CareerInner = styled.div`
   width: 100%;
-  max-width: 90vw;
+  max-width: 1800px;
   margin: 0 auto;
+  margin-top: 8rem;
   padding: 0 clamp(2rem, 5vw, 6rem);
 `;
 
@@ -100,45 +106,80 @@ export const CareerTitle = styled(motion.h2)`
 `;
 
 export const CareerTimeline = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: clamp(6rem, 8vw, 10rem);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(2rem, 3vw, 3rem);
   width: 100%;
+  padding: 2rem;
+  perspective: 2000px;
+  place-items: center;
+  margin: 0 auto;
+  max-width: 1800px;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
-export const CareerRole = styled(motion.div)<ThemeProps>`
-  display: flex;
-  flex-direction: column;
-  gap: clamp(2rem, 3vw, 4rem);
-  width: 100%;
-  max-width: 100%;
-  margin: 0 auto;
-  padding-bottom: clamp(4rem, 6vw, 8rem);
+export const CareerRole = styled(motion.div)<StyledCareerRoleProps>`
+  width: clamp(400px, 30vw, 550px);
+  aspect-ratio: 1;
   position: relative;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+  will-change: transform, opacity;
   
-  &:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+  ${({ $isActive }) => $isActive && `
+    grid-column: span 3;
+    grid-row: span 2;
     width: 100%;
-    height: 1px;
-    background: var(--color-border);
-    opacity: 0.2;
+    max-width: 1600px;
+    aspect-ratio: auto;
+    z-index: 10;
+
+    @media (max-width: 1200px) {
+      grid-column: span 2;
+    }
+
+    @media (max-width: 768px) {
+      grid-column: span 1;
+      width: 100%;
+    }
+  `}
+
+  @media (max-width: 1200px) {
+    width: clamp(380px, 45vw, 500px);
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    min-width: 320px;
+    max-width: 450px;
+  }
+
+  .expanded-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(2rem, 4vw, 5rem);
+    height: 100%;
+    padding: clamp(2rem, 3vw, 4rem);
+
+    @media (max-width: 1200px) {
+      grid-template-columns: 1fr;
+    }
   }
 `;
 
 export const ModuleRow = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
   gap: clamp(2rem, 3vw, 4rem);
-  width: 100%;
-  align-items: stretch;
-
-  @media (max-width: 1200px) {
-    grid-template-columns: 1fr;
-  }
+  height: 100%;
 `;
 
 export const TechClientColumn = styled.div`
@@ -159,18 +200,25 @@ export const RoleHeader = styled.div<ThemeProps>`
     : '1px solid rgba(255, 255, 255, 0.1)'};
   outline-offset: -4px;
   box-shadow: ${({ theme }) => theme.mode === 'light'
-    ? '0 10px 30px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.6)'
-    : 'none'};
-  border-radius: clamp(16px, 2vw, 32px);
-  padding: clamp(2rem, 3vw, 4rem);
-  transition: all 0.3s ease;
+    ? '0 20px 40px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6)'
+    : '0 20px 40px rgba(0, 0, 0, 0.2)'};
+  border-radius: clamp(24px, 3vw, 40px);
+  padding: clamp(2.5rem, 3vw, 4rem);
+  height: 100%;
+  width: 100%;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
   position: relative;
   overflow: hidden;
+  backface-visibility: hidden;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100%;
+  flex-direction: column;
 
+  &.expanded {
+    height: auto;
+    grid-column: 1 / -1;
+  }
+
+  /* Technical Grid Pattern */
   &::before {
     content: '';
     position: absolute;
@@ -181,12 +229,12 @@ export const RoleHeader = styled.div<ThemeProps>`
     background-image: 
       linear-gradient(to right, var(--color-border) 1px, transparent 1px),
       linear-gradient(to bottom, var(--color-border) 1px, transparent 1px);
-    background-size: 20px 20px;
+    background-size: 40px 40px;
     opacity: ${({ theme }) => theme.mode === 'light' ? '0.05' : '0.03'};
     z-index: 0;
   }
 
-  /* Technical Grid Pattern */
+  /* Diagonal Technical Lines */
   &::after {
     content: '';
     position: absolute;
@@ -203,229 +251,114 @@ export const RoleHeader = styled.div<ThemeProps>`
     );
     opacity: ${({ theme }) => theme.mode === 'light' ? '0.03' : '0.02'};
     z-index: 0;
-    pointer-events: none;
+  }
+
+  /* Architectural Corner Elements */
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 120px;
+    background: 
+      linear-gradient(-45deg, transparent 48%, var(--color-accent) 49%, var(--color-accent) 51%, transparent 52%),
+      linear-gradient(45deg, transparent 48%, var(--color-accent) 49%, var(--color-accent) 51%, transparent 52%);
+    opacity: 0.1;
+    z-index: 1;
   }
 
   .role-container {
     position: relative;
     z-index: 1;
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 2rem;
-    padding: 2rem 1.5rem;
-    border-left: 2px solid var(--color-accent);
-    opacity: 0.9;
-    width: 100%;
-    text-align: left;
+    padding: 1.5rem;
+    border-left: 3px solid var(--color-accent);
   }
 
   .title-section {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    width: 100%;
-    overflow: visible;
-    padding-right: 1.5rem;
+    justify-content: center;
+
+    h3 {
+      font-size: clamp(0.85rem, 1vw, 1.1rem);
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--color-accent);
+      position: relative;
+      display: inline-flex;
+      padding: 0.75rem 1.5rem;
+      background: ${({ theme }) => theme.mode === 'light' 
+        ? 'rgba(0, 0, 0, 0.03)' 
+        : 'rgba(255, 255, 255, 0.05)'};
+      margin-bottom: 1.5rem;
+      width: fit-content;
+      
+      &::before {
+        content: '[';
+        margin-right: 0.5rem;
+        color: var(--color-accent);
+        opacity: 0.7;
+      }
+      
+      &::after {
+        content: ']';
+        margin-left: 0.5rem;
+        color: var(--color-accent);
+        opacity: 0.7;
+      }
+    }
 
     h4 {
-      font-size: clamp(1.85rem, 2.625vw, 2.625rem);
+      font-size: clamp(1.75rem, 2.5vw, 2.75rem);
       font-weight: 700;
       line-height: 1.2;
-      color: var(--color-text);
       white-space: pre-wrap;
       word-break: break-word;
-      padding-right: 1rem;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin: 0;
+      padding: 0;
     }
-  }
-
-  h3 {
-    font-size: clamp(0.85rem, 1vw, 1.1rem);
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--color-accent);
-    position: relative;
-    display: inline-flex;
-    padding: 0.75rem 1.5rem;
-    background: ${({ theme }) => theme.mode === 'light' 
-      ? 'rgba(0, 0, 0, 0.03)' 
-      : 'rgba(255, 255, 255, 0.05)'};
-    z-index: 1;
-    margin: 0;
-    box-shadow: ${({ theme }) => theme.mode === 'light'
-      ? 'inset 0 2px 4px rgba(0, 0, 0, 0.03)'
-      : 'none'};
-    white-space: nowrap;
-    width: fit-content;
-    min-width: min-content;
-    overflow: visible;
-    
-    @media (max-width: 768px) {
-      font-size: 0.85rem;
-      letter-spacing: 0.1em;
-      padding: 0.5rem 1rem;
-    }
-    
-    &::before {
-      content: '[';
-      margin-right: 0.5rem;
-      color: var(--color-accent);
-      opacity: ${({ theme }) => theme.mode === 'light' ? '0.7' : '0.5'};
-    }
-    
-    &::after {
-      content: ']';
-      margin-left: 0.5rem;
-      color: var(--color-accent);
-      opacity: ${({ theme }) => theme.mode === 'light' ? '0.7' : '0.5'};
-    }
-  }
-
-  h4 {
-    font-size: clamp(2rem, 3.5vw, 4rem);
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-weight: 700;
-    line-height: 1.1;
-    color: var(--color-text);
-    text-transform: uppercase;
-    letter-spacing: -0.02em;
-    position: relative;
-    z-index: 1;
-    margin: 0;
-    padding-left: 0;
-    white-space: pre-line;
-    text-shadow: ${({ theme }) => theme.mode === 'light'
-      ? '1px 1px 0 rgba(255, 255, 255, 1), -1px -1px 0 rgba(0, 0, 0, 0.05)'
-      : 'none'};
   }
 
   .meta-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    position: relative;
-    z-index: 1;
-    margin-bottom: 2rem;
-  }
-    
-  .duration-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .duration {
-    font-size: clamp(1rem, 1.2vw, 1.25rem);
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    opacity: ${({ theme }) => theme.mode === 'light' ? '0.7' : '0.6'};
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    position: relative;
-    padding-left: 1.5rem;
-
-    &::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      width: 8px;
-      height: 8px;
-      background: var(--color-accent);
-      transform: rotate(45deg);
-      opacity: ${({ theme }) => theme.mode === 'light' ? '0.7' : '0.5'};
-      box-shadow: ${({ theme }) => theme.mode === 'light'
-        ? '0 1px 2px rgba(0, 0, 0, 0.1)'
-        : 'none'};
-    }
-  }
-
-  .location {
-    font-size: var(--font-size-caption);
-    opacity: ${({ theme }) => theme.mode === 'light' ? '0.5' : '0.4'};
-    font-style: italic;
-    position: relative;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-
-    &::after {
-      content: '↗';
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--color-accent);
-      font-style: normal;
-      opacity: ${({ theme }) => theme.mode === 'light' ? '0.7' : '0.5'};
-    }
-  }
-
-  .divider {
-    width: 100%;
-    height: 1px;
-    background: ${({ theme }) => theme.mode === 'light'
-      ? 'rgba(0, 0, 0, 0.08)'
-      : 'var(--color-border)'};
     margin-top: auto;
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.5rem;
+    width: 100%;
   }
 
   .corner-accent {
     position: absolute;
-    width: 120px;
-    height: 120px;
-    right: 0;
     bottom: 0;
-    z-index: 0;
-    opacity: ${({ theme }) => theme.mode === 'light' ? '0.08' : '0.05'};
-    
-    &::before,
-    &::after {
-      content: '';
-      position: absolute;
-      background: ${({ theme }) => theme.mode === 'light'
-        ? 'var(--color-accent)'
-        : 'var(--color-text)'};
-      transition: all 0.3s ease;
-      box-shadow: ${({ theme }) => theme.mode === 'light'
-        ? '0 1px 3px rgba(0, 0, 0, 0.1)'
-        : 'none'};
-    }
-    
-    &::before {
-      right: 0;
-      bottom: 40px;
-      width: 2px;
-      height: 80px;
-    }
-    
-    &::after {
-      right: 40px;
-      bottom: 0;
-      width: 100px;
-      height: 2px;
-    }
+    right: 0;
+    width: 60px;
+    height: 60px;
+    border-right: 3px solid var(--color-accent);
+    border-bottom: 3px solid var(--color-accent);
+    opacity: 0.8;
+    transition: all 0.3s ease;
   }
 
   &:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
     box-shadow: ${({ theme }) => theme.mode === 'light'
-      ? '0 20px 40px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8)'
-      : '0 20px 40px rgba(0, 0, 0, 0.15)'};
-    border: ${({ theme }) => theme.mode === 'light' 
-      ? '1px solid rgba(0, 0, 0, 0.9)' 
-      : '1px solid rgba(255, 255, 255, 0.9)'};
-    outline: ${({ theme }) => theme.mode === 'light'
-      ? '1px solid rgba(0, 0, 0, 0.2)'
-      : '1px solid rgba(255, 255, 255, 0.2)'};
+      ? '0 30px 60px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8)'
+      : '0 30px 60px rgba(0, 0, 0, 0.3)'};
 
     .corner-accent {
-      &::before {
-        height: 100px;
-      }
-      &::after {
-        width: 100px;
-      }
+      width: 80px;
+      height: 80px;
+      opacity: 1;
     }
   }
 `;

@@ -1,6 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { Stats } from '@react-three/drei';
 import type { WebGLProgramWithInfo, WebGLContextWithExtensions } from '../../types/shader-types';
 
 const BannerContainer = styled.div`
@@ -138,171 +137,215 @@ const ShaderNameBanner = () => {
   const animationRef = useRef<number>();
   const programRef = useRef<WebGLProgramWithInfo>();
   const contextRef = useRef<WebGLContextWithExtensions>();
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const gl = canvas.getContext('webgl', {
-      alpha: true,
-      antialias: true,
-      premultipliedAlpha: false,
-      powerPreference: 'high-performance',
-      precision: 'highp',
-    }) as WebGLContextWithExtensions;
-    
-    if (!gl) {
-      console.error('WebGL not supported');
-      return;
-    }
+    let gl: WebGLContextWithExtensions | null = null;
+    let timeLocation: WebGLUniformLocation | null = null;
+    let resolutionLocation: WebGLUniformLocation | null = null;
+    let numParticles = 4;
 
-    contextRef.current = gl;
-
-    // Create shader program
-    const program = gl.createProgram() as WebGLProgramWithInfo;
-    if (!program) return;
-
-    programRef.current = program;
-
-    // Compile shaders
-    const vs = gl.createShader(gl.VERTEX_SHADER);
-    const fs = gl.createShader(gl.FRAGMENT_SHADER);
-    if (!vs || !fs) return;
-
-    gl.shaderSource(vs, vertexShader);
-    gl.shaderSource(fs, fragmentShader);
-    gl.compileShader(vs);
-    gl.compileShader(fs);
-
-    // Check for shader compilation errors
-    if (!gl.getShaderParameter(vs, gl.COMPILE_STATUS)) {
-      console.error('Vertex shader compilation error:', gl.getShaderInfoLog(vs));
-      return;
-    }
-    if (!gl.getShaderParameter(fs, gl.COMPILE_STATUS)) {
-      console.error('Fragment shader compilation error:', gl.getShaderInfoLog(fs));
-      return;
-    }
-
-    gl.attachShader(program, vs);
-    gl.attachShader(program, fs);
-    gl.linkProgram(program);
-
-    // Check for program linking errors
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      console.error('Program linking error:', gl.getProgramInfoLog(program));
-      return;
-    }
-
-    gl.useProgram(program);
-
-    // Create geometry and attributes
-    const numParticles = 4;
-    const vertices = new Float32Array(numParticles * 8);
-    const offsets = new Float32Array(numParticles * 8);
-    const speeds = new Float32Array(numParticles * 4);
-
-    // Generate particle attributes
-    for (let i = 0; i < numParticles; i++) {
-      const idx = i * 8;
-      // Position (2 triangles per particle)
-      vertices[idx] = -1; vertices[idx + 1] = -1;
-      vertices[idx + 2] = 1;  vertices[idx + 3] = -1;
-      vertices[idx + 4] = -1; vertices[idx + 5] = 1;
-      vertices[idx + 6] = 1;  vertices[idx + 7] = 1;
-
-      // Random offsets
-      for (let j = 0; j < 8; j++) {
-        offsets[idx + j] = Math.random();
+    try {
+      const context = canvas.getContext('webgl', {
+        alpha: true,
+        antialias: true,
+        premultipliedAlpha: false,
+        powerPreference: 'high-performance',
+        precision: 'highp',
+      });
+      
+      if (!context) {
+        setHasError(true);
+        return;
       }
 
-      // Random speeds
-      for (let j = 0; j < 4; j++) {
-        speeds[i * 4 + j] = 0.5 + Math.random() * 0.5;
-      }
-    }
+      gl = context as WebGLContextWithExtensions;
+      contextRef.current = gl;
 
-    // Set up buffers
-    const positionBuffer = gl.createBuffer();
-    const offsetBuffer = gl.createBuffer();
-    const speedBuffer = gl.createBuffer();
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
-    const positionLocation = gl.getAttribLocation(program, 'position');
-    gl.enableVertexAttribArray(positionLocation);
-    gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, offsetBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, offsets, gl.STATIC_DRAW);
-    const offsetLocation = gl.getAttribLocation(program, 'offset');
-    gl.enableVertexAttribArray(offsetLocation);
-    gl.vertexAttribPointer(offsetLocation, 2, gl.FLOAT, false, 0, 0);
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, speedBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, speeds, gl.STATIC_DRAW);
-    const speedLocation = gl.getAttribLocation(program, 'speed');
-    gl.enableVertexAttribArray(speedLocation);
-    gl.vertexAttribPointer(speedLocation, 1, gl.FLOAT, false, 0, 0);
-
-    const timeLocation = gl.getUniformLocation(program, 'time');
-    const resolutionLocation = gl.getUniformLocation(program, 'resolution');
-
-    // Set up canvas size
-    const resize = () => {
-      canvas.width = canvas.clientWidth * window.devicePixelRatio;
-      canvas.height = canvas.clientHeight * window.devicePixelRatio;
-      gl.viewport(0, 0, canvas.width, canvas.height);
-      if (resolutionLocation) {
-        gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
-      }
-    };
-    resize();
-    window.addEventListener('resize', resize);
-
-    // Enable blending
-    gl.enable(gl.BLEND);
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-
-    // Animation loop
-    let startTime = performance.now();
-    const animate = () => {
-      const time = (performance.now() - startTime) * 0.001;
-      if (timeLocation) {
-        gl.uniform1f(timeLocation, time);
+      // Create shader program
+      const program = gl.createProgram();
+      if (!program) {
+        setHasError(true);
+        return;
       }
 
-      gl.clear(gl.COLOR_BUFFER_BIT);
+      programRef.current = program as WebGLProgramWithInfo;
+
+      // Compile shaders
+      const vs = gl.createShader(gl.VERTEX_SHADER);
+      const fs = gl.createShader(gl.FRAGMENT_SHADER);
+      if (!vs || !fs) {
+        setHasError(true);
+        return;
+      }
+
+      gl.shaderSource(vs, vertexShader);
+      gl.shaderSource(fs, fragmentShader);
+      gl.compileShader(vs);
+      gl.compileShader(fs);
+
+      // Check for shader compilation errors
+      if (!gl.getShaderParameter(vs, gl.COMPILE_STATUS)) {
+        console.error('Vertex shader compilation error:', gl.getShaderInfoLog(vs));
+        setHasError(true);
+        return;
+      }
+      if (!gl.getShaderParameter(fs, gl.COMPILE_STATUS)) {
+        console.error('Fragment shader compilation error:', gl.getShaderInfoLog(fs));
+        setHasError(true);
+        return;
+      }
+
+      gl.attachShader(program, vs);
+      gl.attachShader(program, fs);
+      gl.linkProgram(program);
+
+      // Check for program linking errors
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.error('Program linking error:', gl.getProgramInfoLog(program));
+        setHasError(true);
+        return;
+      }
+
+      gl.useProgram(program);
+
+      // Create geometry and attributes
+      const vertices = new Float32Array(numParticles * 8);
+      const offsets = new Float32Array(numParticles * 8);
+      const speeds = new Float32Array(numParticles * 4);
+
+      // Generate particle attributes
       for (let i = 0; i < numParticles; i++) {
-        gl.drawArrays(gl.TRIANGLE_STRIP, i * 4, 4);
+        const idx = i * 8;
+        // Position (2 triangles per particle)
+        vertices[idx] = -1; vertices[idx + 1] = -1;
+        vertices[idx + 2] = 1;  vertices[idx + 3] = -1;
+        vertices[idx + 4] = -1; vertices[idx + 5] = 1;
+        vertices[idx + 6] = 1;  vertices[idx + 7] = 1;
+
+        // Random offsets
+        for (let j = 0; j < 8; j++) {
+          offsets[idx + j] = Math.random();
+        }
+
+        // Random speeds
+        for (let j = 0; j < 4; j++) {
+          speeds[i * 4 + j] = 0.5 + Math.random() * 0.5;
+        }
       }
 
-      animationRef.current = requestAnimationFrame(animate);
-    };
-    animate();
+      // Set up buffers
+      const positionBuffer = gl.createBuffer();
+      const offsetBuffer = gl.createBuffer();
+      const speedBuffer = gl.createBuffer();
 
-    return () => {
-      window.removeEventListener('resize', resize);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
+      if (!positionBuffer || !offsetBuffer || !speedBuffer) {
+        setHasError(true);
+        return;
       }
-      gl.deleteProgram(program);
-      gl.deleteShader(vs);
-      gl.deleteShader(fs);
-      gl.deleteBuffer(positionBuffer);
-      gl.deleteBuffer(offsetBuffer);
-      gl.deleteBuffer(speedBuffer);
-    };
+
+      gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+      const positionLocation = gl.getAttribLocation(program, 'position');
+      gl.enableVertexAttribArray(positionLocation);
+      gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+      gl.bindBuffer(gl.ARRAY_BUFFER, offsetBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, offsets, gl.STATIC_DRAW);
+      const offsetLocation = gl.getAttribLocation(program, 'offset');
+      gl.enableVertexAttribArray(offsetLocation);
+      gl.vertexAttribPointer(offsetLocation, 2, gl.FLOAT, false, 0, 0);
+
+      gl.bindBuffer(gl.ARRAY_BUFFER, speedBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, speeds, gl.STATIC_DRAW);
+      const speedLocation = gl.getAttribLocation(program, 'speed');
+      gl.enableVertexAttribArray(speedLocation);
+      gl.vertexAttribPointer(speedLocation, 1, gl.FLOAT, false, 0, 0);
+
+      timeLocation = gl.getUniformLocation(program, 'time');
+      resolutionLocation = gl.getUniformLocation(program, 'resolution');
+
+      const resize = () => {
+        if (!canvas || !gl) return;
+        
+        const pixelRatio = window.devicePixelRatio || 1;
+        const width = canvas.clientWidth * pixelRatio;
+        const height = canvas.clientHeight * pixelRatio;
+        
+        if (canvas.width !== width || canvas.height !== height) {
+          canvas.width = width;
+          canvas.height = height;
+          gl.viewport(0, 0, width, height);
+          
+          if (resolutionLocation) {
+            gl.uniform2f(resolutionLocation, width, height);
+          }
+        }
+      };
+
+      // Initial resize
+      resize();
+      window.addEventListener('resize', resize);
+
+      // Enable blending
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+      // Animation loop
+      let startTime = performance.now();
+      const animate = () => {
+        if (!gl || !timeLocation) return;
+        
+        const currentTime = performance.now();
+        const time = (currentTime - startTime) * 0.001; // Convert to seconds
+        
+        gl.uniform1f(timeLocation, time);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, numParticles * 4);
+        
+        animationRef.current = requestAnimationFrame(animate);
+      };
+
+      animate();
+
+      return () => {
+        window.removeEventListener('resize', resize);
+        if (animationRef.current) {
+          cancelAnimationFrame(animationRef.current);
+        }
+        if (gl) {
+          gl.deleteProgram(program);
+          gl.deleteShader(vs);
+          gl.deleteShader(fs);
+          gl.deleteBuffer(positionBuffer);
+          gl.deleteBuffer(offsetBuffer);
+          gl.deleteBuffer(speedBuffer);
+        }
+      };
+    } catch (error) {
+      console.error('Error in ShaderNameBanner:', error);
+      setHasError(true);
+    }
   }, []);
+
+  if (hasError) {
+    return (
+      <BannerContainer style={{ background: 'linear-gradient(45deg, #2a0845 0%, #6441A5 100%)' }}>
+        <TextOverlay>
+          <MainTitle>Alisha Tené Bunting</MainTitle>
+        </TextOverlay>
+      </BannerContainer>
+    );
+  }
 
   return (
     <BannerContainer>
       <Canvas ref={canvasRef} />
       <TextOverlay>
-        <MainTitle>ALISHA TENÉ BUNTING</MainTitle>
-        <SubTitle>Creative Technologist • Artist • Educator</SubTitle>
+        <MainTitle>Alisha Tené Bunting</MainTitle>
       </TextOverlay>
-      <Stats showPanel={0} className="stats-panel" />
     </BannerContainer>
   );
 };

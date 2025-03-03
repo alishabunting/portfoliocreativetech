@@ -16,8 +16,11 @@ const expertiseAreas = [
     title: 'CREATIVE TECHNOLOGY',
     icon: '🚀',
     skills: [
-      'AI/ML Implementation',
-      'Web3 Development',
+      'Large Language Models & Generative AI',
+      'AR/VR Development',
+      'Web3 & Blockchain Integration',
+      'IoT Systems Architecture',
+      'Real-time 3D & Spatial Computing',
       'Interactive Experiences',
       'Emerging Tech Integration',
       'Digital Innovation Strategy'
@@ -30,34 +33,40 @@ const expertiseAreas = [
       'React & Modern JavaScript',
       'Three.js & WebGL',
       'Smart Contract Development',
-      'API Integration',
-      'Responsive Web Design'
+      'Cloud Infrastructure & Scaling',
+      'WordPress & CMS Development',
+      'PHP & SQL Database Management',
+      'HTML/CSS & Responsive Design',
+      'Unity Game Development'
     ]
   },
   {
-    title: 'PRODUCTION',
+    title: 'PRODUCTION & TOOLS',
     icon: '🎮',
     skills: [
       'Technical Project Management',
-      'Interactive Production',
-      'Digital Asset Creation',
-      'Content Management',
-      'Quality Assurance'
+      'Interactive Production Pipeline',
+      'Gaming Production & Integration',
+      'Adobe Creative Suite',
+      'Motion Graphics & Animation',
+      'Video Production & Editing',
+      'Digital Asset Management',
+      'UI/UX Design Tools',
+      'Content Management Systems'
     ]
   },
   {
     title: 'EDUCATION & LEADERSHIP',
     icon: '📚',
     skills: [
+      'Technical Innovation Strategy',
       'Workshop Development & Facilitation',
-      'Technical Team Leadership',
+      'Cross-functional Team Leadership',
       'Digital Transformation Strategy',
       'Innovation Framework Development',
-      'Cross-functional Team Collaboration',
-      'Regular speaker on AI implementation',
-      'Workshop leader in Web3 education',
-      'Featured speaker on digital transformation',
-      'Advocate for diversity in tech'
+      'Technical Mentorship',
+      'Web3 & AI Education',
+      'Client & Stakeholder Management'
     ]
   }
 ];

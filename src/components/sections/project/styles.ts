@@ -230,6 +230,16 @@ export const ExpandedTitle = styled.h2`
   z-index: 2;
 `;
 
+export const ExpandedAgency = styled.h3`
+  font-size: var(--font-size-subheading);
+  font-weight: 400;
+  opacity: 0.7;
+  margin-bottom: 2rem;
+  color: var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+`;
+
 export const ScrollableContent = styled.div`
   overflow-y: auto;
   padding: 2rem;
@@ -526,9 +536,13 @@ export const SectionHeading = styled.h2`
   color: white;
   font-size: var(--font-size-section);
   font-weight: 700;
-  margin-bottom: 4rem;
+  margin: 4rem 0;
   text-align: left;
   padding: 0 1rem;
+
+  [data-theme="light"] & {
+    color: black;
+  }
 `;
 
 export const CarouselWrapper = styled.div`
