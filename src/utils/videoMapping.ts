@@ -4,9 +4,9 @@ export const videoMapping: Record<string, string> = {
   '/videos/purplefluid_bg.mp4': '/compressed_videos/purplefluid_bg_compressed.mp4',
   
   // Bacardi videos
-  '/projects/bacardi/dancing_shoes_technicalexecution.mp4': '/projects/bacardi/compressed/dancing_shoes_technicalexecution_compressed.mp4',
-  '/projects/bacardi/main-video.mp4': '/projects/bacardi/compressed/main-video_compressed.mp4',
-  '/projects/bacardi/feature-demo.mp4': '/projects/bacardi/compressed/feature-demo_compressed.mp4',
+  '/projects/bacardi/dancing_shoes_technicalexecution.mp4': '/compressed_videos/bacardi_dancing_shoes_compressed.mp4',
+  '/projects/bacardi/main-video.mp4': '/compressed_videos/bacardi_main_video_compressed.mp4',
+  '/projects/bacardi/feature-demo.mp4': '/compressed_videos/bacardi_feature_demo_compressed.mp4',
   
   // Pedigree videos
   '/projects/pedigree/design-sample.mp4': '/compressed_videos/pedigree_design_sample_compressed.mp4',

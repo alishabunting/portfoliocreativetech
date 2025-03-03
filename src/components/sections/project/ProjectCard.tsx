@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { ProjectCardProps } from './types';
+import { getCompressedVideo } from '../../../utils/videoMapping';
 
 const Card = styled(motion.div)`
   position: relative;
@@ -211,7 +212,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClick }) =>
           </AnimatedPreview>
         ) : project.image.match(/\.(mp4|mov|webm)$/i) ? (
           <video 
-            src={project.image}
+            src={getCompressedVideo(project.image)}
             autoPlay
             muted
             loop
